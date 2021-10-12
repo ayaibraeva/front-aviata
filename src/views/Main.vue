@@ -7,10 +7,13 @@
       <div class="options-companies">
         <h1>Авиакомпании</h1>
         <div class="checkboxes">
-          <input type="checkbox">
-
+          <input type="checkbox" id="all" :checked="getOption('allAirlines')" @input="showAllAirlines"/>
+<label for="all" v-text="'Все'"/>
         </div>
-       {{getAirlineList}}
+            <div class="checkboxes" v-for="(checkbox, index) in getAirlineList" :key="index">
+          <input type="checkbox" :id="'airline'+ index" :checked="getAirlineOption(checkbox.airline_code)" @input="showAirline(checkbox.airline_code)">
+          <label :for="'airline'+index" v-text="checkbox.airline_name" />
+        </div>
       </div>
     </div>
     <div class="flights">
@@ -21,6 +24,8 @@
               </card></div>
              
 </div> -->
+{{getFlights}}
+
 
     
     </div>
@@ -34,7 +39,7 @@
 
 
 
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
 
   name: 'Main',
@@ -49,7 +54,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-        getAirlineList:'getAirlineList'
+      getFlights: 'getFlights',
+        getAirlineList:'getAirlineList',
+        getAirlineOption: 'getAirlineOption',
+        getOption: 'getOption'
+    })
+  },
+  methods:{
+    ...mapActions({
+      showAllAirlines: 'showAllAirlines',
+      showAirline: 'showAirline'
     })
   }
 

@@ -15,12 +15,8 @@ export default new Vuex.Store({
         selectedAirlines: []
     },
     getters:{
-        getAirlineList: state => {
-            return state.airlines
-        },
+     
         getFlights: state => {
-
-
             return state.flights.filter((flight) => {
                 if(state.directFlight && flight['itineraries'][0][0]['stops'] !== 0) return false;
                 if(state.refundableTicket && !flight['refundable']) return false;
@@ -28,10 +24,11 @@ export default new Vuex.Store({
             })
         },
         getOption: state => option => state[option],
-        getAirlineOption:  state => Object.keys(state.airlines).map((code) => ({
+        getAirlineList:  state => Object.keys(state.airlines).map((code) => ({
             airline_name: state.airlines[code],
             airline_code: code
         })),
+        getAirlineOption: state => airline => state.selectedAirlines.includes(airline)
 
 
     },
@@ -47,7 +44,11 @@ export default new Vuex.Store({
             state.refundableTicket = !state.refundableTicket
         },
         showAllAirlines(state){
+            state.selectAllAirlines = !state.selectAllAirlines
             state.selectedAirlines = []
+        },
+        notSelectAllAirlines(state){
+            state.selectAllAirlines = false
         },
         selectAirlines(state, airline){
             state.selectedAirlines.push(airline)
@@ -60,6 +61,7 @@ export default new Vuex.Store({
             state.directFlight = false,
             state.withBaggage = false,
             state.refundableTicket = false,
+            state.selectAllAirlines =true,
             state.selectedAirlines = []
         }
         
@@ -79,15 +81,12 @@ export default new Vuex.Store({
             commit('showAllAirlines')
         },
         showAirline({state, commit}, airline){
+            if(state.selectAllAirlines) commit('showAllAirlines')
             state.selectedAirlines.includes(airline) ? commit('removeAirline', airline) : commit('selectAirlines', airline)
         },
         resetOptions({commit}){
             commit('resetOptions')
         }
-
-
-
-        
 
     }
 })
