@@ -57,33 +57,33 @@ export default {
 }
 </script>
 
-<style>
-/* 
-// .sidebar{
-//   width: 240px;
-//   margin-right: 20px;
-// }
-// .options-tariffs{
-//   background: #F5F5F5;
-// border-radius: 4px;
-// padding: 12px;
-// margin-bottom: 12px;
-// }
-// .options-companies{
-//   background: #F5F5F5;
-// border-radius: 4px;
-// padding: 12px;
-// }
-// h1{
-//   font-style: normal;
-// font-weight: bold;
-// font-size: 14px;
-// line-height: 20px;
-// color: #202123;
-// margin-bottom: 22px;
-// }
-// .flights{
-//   display: flex;
-//   flex-direction: column;
-// } */
+<style lang="scss" scoped>
+
+.sidebar{
+  width: 240px;
+ margin-right: 20px;
+ }
+ .options-tariffs{
+  background: #F5F5F5;
+ border-radius: 4px;
+ padding: 12px;
+margin-bottom: 12px;
+ }
+.options-companies{
+   background: #F5F5F5;
+ border-radius: 4px;
+padding: 12px;
+ }
+ h1{
+  font-style: normal;
+ font-weight: bold;
+ font-size: 14px;
+ line-height: 20px;
+ color: #202123;
+ margin-bottom: 22px;
+ }
+ .flights {
+   display: flex;
+   flex-direction: column;
+ }
 </style>
