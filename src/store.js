@@ -15,12 +15,13 @@ export default new Vuex.Store({
         selectedAirlines: []
     },
     getters:{
-     
         getFlights: state => {
             return state.flights.filter((flight) => {
-                if(state.directFlight && flight['itineraries'][0][0]['stops'] !== 0) return false;
+                if(state.directFlight && flight['itineraries'][0][0]['stops'] !== 0){
+                    return false;
+                }
                 if(state.refundableTicket && !flight['refundable']) return false;
-                return state.airlines
+                return state.selectAllAirlines ? true : state.selectedAirlines.length > 0 && state.selectedAirlines.includes(flight['itineraries'][0][0]['carrier'])
             })
         },
         getOption: state => option => state[option],

@@ -3,6 +3,14 @@
     <div class="sidebar">
       <div class="options-tariffs">
         <h1>Опции тарифа</h1>
+        <div class="checkboxes">
+          <input type="checkbox" id="withBaggage" :checked="getOption('withBaggage')" @input="showWithBaggage"/>
+          <label for="withBaggage" v-text="'Только с багажом'"/>
+          <input type="checkbox" id="directFlight" :checked="getOption('directFlight')" @input="showDirectFlights"/>
+          <label for="directFlight" v-text="'Только прямые'"/>
+          <input type="checkbox" id="refundableTicket" :checked="getOption('refundableTicket')" @input="showRefundableTickets"/>
+          <label for="refundableTicket" v-text="'Только возвратные'"/>
+        </div>
       </div>
       <div class="options-companies">
         <h1>Авиакомпании</h1>
@@ -47,9 +55,7 @@ export default {
   data(){
     return{
       
- 
-    
-    
+
     }
   },
   computed: {
@@ -63,8 +69,11 @@ export default {
   methods:{
     ...mapActions({
       showAllAirlines: 'showAllAirlines',
-      showAirline: 'showAirline'
-    })
+      showAirline: 'showAirline',
+      showDirectFlights: 'showDirectFlights',
+      showWithBaggage: 'showWithBaggage',
+      showRefundableTickets: 'showRefundableTickets'
+    }),
   }
 
 
@@ -100,4 +109,5 @@ padding: 12px;
    display: flex;
    flex-direction: column;
  }
+
 </style>
