@@ -15,7 +15,7 @@
       <div class="options-companies">
         <h1>Авиакомпании</h1>
         <div class="checkboxes">
-          <input type="checkbox" id="all" :checked="getOption('allAirlines')" @input="showAllAirlines"/>
+          <input type="checkbox" id="all" :checked="getOption('selectAllAirlines')" @input="showAllAirlines"/>
 <label for="all" v-text="'Все'"/>
         </div>
             <div class="checkboxes" v-for="(checkbox, index) in getAirlineList" :key="index">
@@ -25,20 +25,8 @@
       </div>
     </div>
     <div class="flights">
-      <!-- <div class="flight"  v-for="(flight, i) in flights" :key="i" >
-        <div   v-for="(card, i) in flight.itineraries" :key="i">
-           <card  v-for="(item, i) in card " :card="item" :key="i">
-   
-              </card></div>
-             
-</div> -->
-{{getFlights}}
-
-
-    
+        {{getFlights}}
     </div>
-  
-    
   </div>
 
 </template>

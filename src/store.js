@@ -11,7 +11,7 @@ export default new Vuex.Store({
         directFlight: false,
         withBaggage: false,
         refundableTicket: false,
-        selectAllAirlines: false,
+        selectAllAirlines: true,
         selectedAirlines: []
     },
     getters:{
@@ -36,7 +36,7 @@ export default new Vuex.Store({
     mutations:{
         showDirectFlights(state){
             state.directFlight = !state.directFlight
-            
+            console.log(state.directFlight)
         },
         showWithBaggage(state){
             state.withBaggage = !state.withBaggage
@@ -56,7 +56,6 @@ export default new Vuex.Store({
         },
         removeAirline(state, airline){
             state.selectedAirlines.splice(state.selectedAirlines.indexOf(airline), 1)
-
         },
         resetOptions(state){
             state.directFlight = false,

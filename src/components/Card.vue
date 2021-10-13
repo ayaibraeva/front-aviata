@@ -15,7 +15,7 @@
           <p class="code">{{card.segments[1]}}</p>
           <p>4 ч 20 м</p>
          
-          <p class="code"> </p>
+          <p class="code"></p>
         </div>
         <div class="timeline">
           <p>через Шымкент, 1 ч 50 м</p>
@@ -36,7 +36,7 @@
     <BaseButton variant="blue" class="center-btn"> Условия тарифа</BaseButton>
     
 <div class="irrevocable">  <p>невозвратный</p></div>
-     
+
     </div>
 
 
@@ -44,7 +44,7 @@
 </div>
 <div class="card__right">
 
-  <p class="price">{{card.price.amount}} {{card.price.currency}}</p>
+  <p class="price"></p>
   <BaseButton></BaseButton>
   
   <p class="card__right-text">Цена за всех пассажиров</p>
@@ -82,10 +82,6 @@ export default {
 
 
     },
-    mounted(){
-    console.log( Object.entries(this.card.segments))
-  
-    }
 }
 </script>
 
