@@ -4,7 +4,7 @@
   <div class="card__left-top"> 
     <div class="card__logo"> 
         <img class="logo" :src="getAirlineIcon"/>  
-           <p>{{card.itineraries[0][0]['carrier_name']}}</p>
+           <p class="logo-text">{{card.itineraries[0][0]['carrier_name']}}</p>
     </div>
    
     <div class="info">
@@ -15,7 +15,7 @@
       <div class="info__content">
         <div class="content">
           <p class="code">{{originInfo['origin_code']}}</p>
-          <p>{{getTraveltime}}</p>
+          <p class="time-travel">{{getTraveltime}}</p>
         
           <p class="code">{{destinationInfo['dest_code']}}</p>
         </div>
@@ -152,18 +152,25 @@ export default {
   height: 168px;
   margin-bottom: 12px;
   background: #fff;
+  
 
   &__logo{
     display: flex;
     align-items: center;
      margin-right: 14px;
-     p{
+     @media(max-width: 850px) {
+       margin: 0;
+       order:2;
+       
+     }
+     .logo-text{
        font-weight: 600;
-font-size: 14px;
-line-height: 19px;
-
-
-color: #202123;
+        font-size: 14px;
+        line-height: 19px;
+        color: #202123;
+        @media(max-width:850px){
+        display: none;
+        }
 
      }
   }
@@ -174,6 +181,11 @@ color: #202123;
     flex-direction: column;
     max-width: 71%;
     width: 100%;
+    @media(max-width: 850px) {
+      padding: 16px 16px 12px;
+      width:100%;
+      
+    }
     &-top{
       display: flex;
       align-items: center;
@@ -196,6 +208,9 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
+@media(max-width: 850px){
+  display: none;
+}
 .price{
   font-size: 24px;
 line-height: 28px;
@@ -254,6 +269,9 @@ margin-right: 6px;
     line-height: 16px;
     color: #202123;
     margin: 0;
+      @media(max-width: 850px) {
+            display: none;
+          }
 
   }
   .time{
@@ -262,6 +280,10 @@ margin-right: 6px;
     line-height: 33px;
     color: #202123;
     margin:0;
+      @media(max-width: 850px) {
+            font-size: 18px;
+            
+          }
    
     }
     &__content{
@@ -269,11 +291,18 @@ margin-right: 6px;
       flex-direction: column;
        margin-left: 30px;
        margin-right: 30px;
+         @media(max-width: 850px) {
+              margin-left: 4px;
+       margin-right: 4px;
+       height: 100%;
+            
+          }
        .content{
         display: flex;
         align-items: center;
        padding-bottom: 3.5px;
        position: relative;
+       
       
        &::after{
          content:'';
@@ -282,6 +311,14 @@ margin-right: 6px;
          top: 100%;
          width: 168px;
          left: 1%;
+           @media(max-width: 850px) {
+            width: 28px;
+            top: 6px;
+            left: 35%;
+
+            
+          }
+         
          
        }
         .code{
@@ -292,8 +329,26 @@ margin-right: 6px;
           color: #B9B9B9;
           margin:0;
           margin-right: 46px;
+            @media(max-width: 850px) {
+            font-size: 14px;
+            margin: 0;
+            
+          }
+          &:first-child{
+           
+            @media(max-width: 850px) {
+            
+             margin-right: 20px;
+          }
+          }
+          &:last-child{
+            @media(max-width: 850px) {
+            
+             margin-left: 20px;
+          }
+          }
         }
-        p{
+        .time-travel{
           font-weight: normal;
           font-size: 12px;
           line-height: 18px;
@@ -301,6 +356,11 @@ margin-right: 6px;
           color: #202123;
           margin:0;
           margin-right: 46px;
+            @media(max-width: 850px) {
+            display: none;
+            
+          }
+      
         }
       
       }
@@ -317,6 +377,10 @@ margin-right: 6px;
       justify-content: center;
       max-width: 168px;
       width: 100%;
+        @media(max-width: 850px) {
+            display: none;
+            
+          }
       }
     }
 

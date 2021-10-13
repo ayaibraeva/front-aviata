@@ -1,5 +1,5 @@
 <template>
-  <div class="container wrapper"> 
+  <div class="wrapper" :class="{container: !isMobile}"> 
     <div class="sidebar" v-if="showFilter || !isMobile">
       <div v-if="isMobile" class="sidebar__head"> 
         <div @click=" showFilter = !showFilter" class="text"> Закрыть </div>
@@ -92,7 +92,6 @@ export default {
     } else {
       this.setIsMobile(false)
     }
-
   }
 
 
