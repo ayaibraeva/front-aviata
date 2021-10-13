@@ -11,9 +11,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" >
 
-/* @font-face {
+ @font-face {
   font-family: "Open Sans", sans-serif;
   src: url(https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap);
 }
@@ -29,20 +29,24 @@ export default {
 .wrapper{
   display: flex;
   margin-top: 43px !important;
-
+    @media(max-width: 850px) {
+    flex-direction: column;
+    position: relative;
+    
+  }
 }
 
 html {
   overflow-x: hidden;
   margin-right: calc(-1 * (100vw - 100%));
-   font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
   font-family: "Open Sans", sans-serif;
   background: #D7D7D7;
   @media(max-width: 850px) {
-    overflow-x: hidden;
+    overflow-x:hidden
   }
 }
 
@@ -68,6 +72,6 @@ a {
   @media(max-width: 850px) {
     padding: 0 16px;
   }
-} */
+} 
 </style>
 

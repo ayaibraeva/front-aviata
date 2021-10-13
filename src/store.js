@@ -12,7 +12,8 @@ export default new Vuex.Store({
         withBaggage: false,
         refundableTicket: false,
         selectAllAirlines: true,
-        selectedAirlines: []
+        selectedAirlines: [],
+        isMobile: false,
     },
     getters:{
         getFlights: state => {
@@ -29,9 +30,8 @@ export default new Vuex.Store({
             airline_name: state.airlines[code],
             airline_code: code
         })),
-        getAirlineOption: state => airline => state.selectedAirlines.includes(airline)
-
-
+        getAirlineOption: state => airline => state.selectedAirlines.includes(airline),
+        isMobile: state => state.isMobile,
     },
     mutations:{
         showDirectFlights(state){
@@ -63,7 +63,11 @@ export default new Vuex.Store({
             state.refundableTicket = false,
             state.selectAllAirlines =true,
             state.selectedAirlines = []
-        }
+        },
+        setIsMobile(state, payload) {
+            state.isMobile = payload
+          },
+        
         
 
     },
