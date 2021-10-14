@@ -135,12 +135,15 @@ export default {
 
   @media (max-width: 850px) {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     left: 0;
     top: 0;
     z-index: 98;
     margin-bottom: 0;
+    margin-right: 0;
+    overflow: scroll;
+    padding-bottom: 16px;
     background: #f5f5f5;
   }
   &__head {
