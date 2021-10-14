@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-<router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-}
+  name: "App",
+};
 </script>
 
 <style lang="scss" >
-
- @font-face {
+@font-face {
   font-family: "Open Sans", sans-serif;
   src: url(https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap);
 }
@@ -26,13 +24,12 @@ export default {
   padding: 0;
 }
 
-.wrapper{
+.wrapper {
   display: flex;
   margin-top: 43px !important;
-    @media(max-width: 850px) {
+  @media (max-width: 850px) {
     flex-direction: column;
     position: relative;
-    
   }
 }
 
@@ -44,9 +41,9 @@ html {
 
 body {
   font-family: "Open Sans", sans-serif;
-  background: #D7D7D7;
-  @media(max-width: 850px) {
-    overflow-x:hidden
+  background: #d7d7d7;
+  @media (max-width: 850px) {
+    overflow-x: hidden;
   }
 }
 
@@ -69,9 +66,9 @@ a {
   width: 100%;
   padding: 0 20px;
   margin: 0 auto;
-  @media(max-width: 850px) {
+  @media (max-width: 850px) {
     padding: 0 16px;
   }
-} 
+}
 </style>
 

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {airlines, flights} from './results.json'
+import { airlines, flights } from './results.json'
 
 Vue.use(Vuex)
 
@@ -15,80 +15,80 @@ export default new Vuex.Store({
         selectedAirlines: [],
         isMobile: false,
     },
-    getters:{
+    getters: {
         getFlights: state => {
             return state.flights.filter((flight) => {
-                if(state.directFlight && flight['itineraries'][0][0]['stops'] !== 0){
+                if (state.directFlight && flight['itineraries'][0][0]['stops'] !== 0) {
                     return false;
                 }
-                if(state.refundableTicket && !flight['refundable']) return false;
+                if (state.refundableTicket && !flight['refundable']) return false;
                 return state.selectAllAirlines ? true : state.selectedAirlines.length > 0 && state.selectedAirlines.includes(flight['itineraries'][0][0]['carrier'])
             })
         },
         getOption: state => option => state[option],
-        getAirlineList:  state => Object.keys(state.airlines).map((code) => ({
+        getAirlineList: state => Object.keys(state.airlines).map((code) => ({
             airline_name: state.airlines[code],
             airline_code: code
         })),
         getAirlineOption: state => airline => state.selectedAirlines.includes(airline),
         isMobile: state => state.isMobile,
     },
-    mutations:{
-        showDirectFlights(state){
+    mutations: {
+        showDirectFlights(state) {
             state.directFlight = !state.directFlight
             console.log(state.directFlight)
         },
-        showWithBaggage(state){
+        showWithBaggage(state) {
             state.withBaggage = !state.withBaggage
         },
-        showRefundableTickets(state){
+        showRefundableTickets(state) {
             state.refundableTicket = !state.refundableTicket
         },
-        showAllAirlines(state){
+        showAllAirlines(state) {
             state.selectAllAirlines = !state.selectAllAirlines
             state.selectedAirlines = []
         },
-        notSelectAllAirlines(state){
+        notSelectAllAirlines(state) {
             state.selectAllAirlines = false
         },
-        selectAirlines(state, airline){
+        selectAirlines(state, airline) {
             state.selectedAirlines.push(airline)
         },
-        removeAirline(state, airline){
+        removeAirline(state, airline) {
             state.selectedAirlines.splice(state.selectedAirlines.indexOf(airline), 1)
         },
-        resetOptions(state){
+        resetOptions(state) {
             state.directFlight = false,
-            state.withBaggage = false,
-            state.refundableTicket = false,
-            state.selectAllAirlines =true,
-            state.selectedAirlines = []
+                state.withBaggage = false,
+                state.refundableTicket = false,
+                state.selectAllAirlines = true,
+                state.selectedAirlines = []
         },
         setIsMobile(state, payload) {
             state.isMobile = payload
-          },
-        
-        
+        },
+
+
 
     },
-    actions:{
-        showDirectFlights({commit}){
+    actions: {
+        showDirectFlights({ commit }) {
             commit('showDirectFlights')
         },
-        showWithBaggage({commit}){
+        showWithBaggage({ commit }) {
             commit('showWithBaggage')
         },
-        showRefundableTickets({commit}){
+        showRefundableTickets({ commit }) {
             commit('showRefundableTickets')
         },
-        showAllAirlines({commit}){
+        showAllAirlines({ commit }) {
             commit('showAllAirlines')
         },
-        showAirline({state, commit}, airline){
-            if(state.selectAllAirlines) commit('showAllAirlines')
+        showAirline({ state, commit }, airline) {
+            if (state.selectAllAirlines) commit('showAllAirlines')
             state.selectedAirlines.includes(airline) ? commit('removeAirline', airline) : commit('selectAirlines', airline)
         },
-        resetOptions({commit}){
+        resetOptions({ commit }) {
             commit('resetOptions')
         }
 
