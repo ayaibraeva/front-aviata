@@ -15,11 +15,11 @@
       <div class="info__content">
         <div class="content">
           <p class="code">{{originInfo['origin_code']}}</p>
-          <p class="time-travel">{{getTraveltime}}</p>
+          <p class="time-travel" v-if="!isMobile">{{getTraveltime}}</p>
         
           <p class="code">{{destinationInfo['dest_code']}}</p>
         </div>
-        <div class="timeline">
+        <div class="timeline" v-if="!isMobile">
           <p>{{getSegments}}</p>
         </div>
       </div>
@@ -31,26 +31,49 @@
 
       </div>
     </div>
+ 
+    
 
   </div>
   <div class="card__left-bottom">
-    <BaseButton variant="blue">Детали перелета</BaseButton>
+    <BaseButton variant="blue" class="detail-btn">{{isMobile ? 'Детали' : 'Детали перелета'}}</BaseButton>
     <BaseButton variant="blue" class="center-btn"> Условия тарифа</BaseButton>
-    
-<div class="irrevocable"> 
+  
+<div class="irrevocable" v-if="!isMobile"> 
+          <svg class="icon">
+                <use
+                  :xlink:href="
+                    require('@/assets/icons.svg') + '#icon-non-refundeble'
+                  "
+                ></use>
+              </svg>
+
   <p>{{card.refundable ? 'возвратный' : 'невозвратный'}}</p>
   </div>
+
 </div>
 
 
+
+</div>
+<div class="card__bottom-mobile" v-if="isMobile">
+  
+   <p class="time-travel" >{{getTraveltime}}</p>
+    <div class="time-travel">
+          <p>{{getSegments}}</p>
+        </div>
 
 </div>
 <div class="card__right">
-  <p class="price">{{card.price}} {{card.currency}}</p>
-  <BaseButton/>
+
+  <p class="price" v-if="!isMobile" >{{card.price}} {{card.currency}}</p>
+  <div v-if="isMobile" class="card__right-mobile">
+  <p class="card__right-text">На Авиате</p>  
+    </div>
+  <BaseButton>{{isMobile ? `${card.price} ₸` : 'Выбрать'}}</BaseButton>
   
-  <p class="card__right-text">Цена за всех пассажиров</p>
-  <div class="card__right-bottom">
+  <p class="card__right-text" v-if="!isMobile">Цена за всех пассажиров</p>
+  <div class="card__right-bottom" v-if="!isMobile">
     <p> {{card.services ? 'Есть багаж' : 'Нет багажа'}} </p>
     <BaseButton variant="addBtn"> + Добавить багаж</BaseButton> 
     </div>
@@ -61,6 +84,8 @@
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex'
+
 import BaseButton from './BaseButton.vue'
 export default {
   components: { BaseButton },
@@ -79,6 +104,10 @@ export default {
     }
     },
     computed:{
+         ...mapGetters({
+      
+        isMobile: 'isMobile'
+    }),
       originInfo(){
         return this.card.itineraries[0][0].segments[0]
       },
@@ -88,9 +117,9 @@ export default {
       getSegments(){
         let segments = this.card.itineraries[0][0].segments
         if(segments.length === 1){
-            return  ` Прямой рейс `
+            return  `${this.isMobile ?  'прямой':'Прямой рейс'} `
         }else  if(segments.length === 2){
-          return `через ${segments[0]['airport_dest']}, ${this.getStopsTime}` 
+          return `${ this.isMobile ? `${this.card.itineraries[0][0].stops} пересадки` :`через ${segments[0]['airport_dest']}, ${this.getStopsTime}`}` 
         }else {
           return `${this.card.itineraries[0][0].stops} пересадки`
         }
@@ -131,13 +160,20 @@ export default {
       }
     },
     methods:{
+        ...mapMutations({
+       setIsMobile: "setIsMobile",
+    }),
 
     },
-   mounted(){
-          console.log(typeof(this.card.itineraries[0][0].traveltime))
-                    console.log(this.card.itineraries[0][0].carrier)
+ mounted(){
+    if (window.screen.width <= 768) {
+      this.setIsMobile(true)
+    } else {
+      this.setIsMobile(false)
+    }
+    
+  }
 
-}
 }
 </script>
 
@@ -147,20 +183,34 @@ export default {
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
-  max-width: 880px;
-  width:100%;
+  
+  width:880px;
   height: 168px;
   margin-bottom: 12px;
   background: #fff;
+
+  @media(max-width: 850px){
+    flex-direction: column;
+    justify-content: unset;
+    width: 100vw;
+  }
   
 
   &__logo{
     display: flex;
     align-items: center;
      margin-right: 14px;
+     width:130px;
      @media(max-width: 850px) {
        margin: 0;
+      
        order:2;
+       justify-content: flex-end;
+       border-radius: 100px;
+       border: 1px solid rgb(0, 86, 159);
+       width: fit-content;
+       margin-top: 8px;
+      padding: 4px;
        
      }
      .logo-text{
@@ -179,28 +229,39 @@ export default {
     padding: 40px 20px 16px;
     display: flex;
     flex-direction: column;
-    max-width: 71%;
+    max-width: 80%;
     width: 100%;
     @media(max-width: 850px) {
-      padding: 16px 16px 12px;
+      padding: 16px 16px 0;
+      max-width: 100%;
       width:100%;
       
     }
     &-top{
       display: flex;
       align-items: center;
+      @media(max-width: 850px){
+        justify-content: space-between;
+        order:2;
+      }
       }
       &-bottom{
         display: flex;
         align-items: center;
         margin-top: 46px;
+        @media(max-width: 850px) {
+          order:1;
+          margin-top: 0;
+          justify-content: flex-end;
+          
+        }
       }
     
 
   }
   &__right{
     padding: 12px 20px;
-    max-width: 29%;
+    max-width: 30%;
  width: 100%;
     background: #F5F5F5;
 border-radius: 0px 4px 4px 0px;
@@ -209,8 +270,24 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 @media(max-width: 850px){
-  display: none;
+  flex-direction: row;
+justify-content: space-between;
+  background: #fff;
+  padding: 0;
+  border-top: 1px solid rgba(219,219,219, 1);
+  padding-left:16px ;
+  max-width: 100vw;
+  margin-top: 40px;
 }
+&-mobile{
+  width: 100%;
+      display: flex;
+    align-items: center;
+    justify-items: flex-start;
+
+
+}
+
 .price{
   font-size: 24px;
 line-height: 28px;
@@ -225,6 +302,9 @@ line-height: 16px;
 text-align: center;
 color: #707276;
 margin-top: 8px;
+@media(max-width: 850px){
+  margin-top: 0;
+}
 }
 
 &-bottom{
@@ -244,6 +324,7 @@ color: #202123;
 margin-right: 6px;
 
   }
+
 }
 
 
@@ -253,10 +334,16 @@ margin-right: 6px;
   width:20px;
   height: 20px;
   margin-right: 7px;
+  @media(max-width: 850px){
+    margin-right: 0;
+  }
 }
 .info{
   display: flex;
   align-items: center;
+
+    width: 100%;
+
   &__date{
     display: flex;
     align-items: center;
@@ -290,11 +377,15 @@ margin-right: 6px;
       display: flex;
       flex-direction: column;
        margin-left: 30px;
-       margin-right: 30px;
+       
+       
          @media(max-width: 850px) {
-              margin-left: 4px;
-       margin-right: 4px;
-       height: 100%;
+              margin-left: 6px;
+       margin-right: 6px;
+      
+       height: 19px;
+    align-items: flex-end;
+    justify-content: flex-end;
             
           }
        .content{
@@ -348,7 +439,14 @@ margin-right: 6px;
           }
           }
         }
-        .time-travel{
+   
+      
+      }
+
+    }
+
+  }
+       .time-travel{
           font-weight: normal;
           font-size: 12px;
           line-height: 18px;
@@ -356,14 +454,51 @@ margin-right: 6px;
           color: #202123;
           margin:0;
           margin-right: 46px;
-            @media(max-width: 850px) {
-            display: none;
+          @media(max-width: 850px) {
+            margin: 0;
+            font-size: 14px;
+            color: #B9B9B9;
+
             
           }
+          &:last-child{
+@media(max-width: 850px) {
+  margin-left: 16px;
+  
+}
+          }
+           
       
         }
+  .center-btn{
+    margin-right: 25px;
+    margin-left: 25px;
+    @media(max-width: 850px) {
+      display: none;
       
-      }
+    }
+  }
+  .irrevocable{
+    display: flex; 
+    align-items: center;
+    @media(max-width: 850px){
+      margin-left: 16px;
+    }
+
+    p{
+      font-size: 12px;
+line-height: 14px;
+text-align: center;
+color: #707276;
+    }
+  }
+
+.card__bottom-mobile{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 16px 0;
+}
       .timeline{
       font-weight: normal;
       font-size: 12px;
@@ -377,26 +512,11 @@ margin-right: 6px;
       justify-content: center;
       max-width: 168px;
       width: 100%;
-        @media(max-width: 850px) {
-            display: none;
-            
-          }
+     
       }
-    }
-
-  }
-  .center-btn{
-    margin-right: 25px;
-    margin-left: 25px;
-  }
-  .irrevocable{
-    display: flex; 
-    align-items: center;
-    p{
-      font-size: 12px;
-line-height: 14px;
-text-align: center;
-color: #707276;
-    }
-  }
+      .icon{
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        }
 </style>

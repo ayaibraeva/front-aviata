@@ -44,9 +44,13 @@ export default {
    line-height: 25px;
    text-align: center;
    color: #FFFFFF;
-   max-width: 200px;
+   
    width: 100%;
-   height: 40px;
+   @media(max-width: 850px) {
+     border-radius: 0;
+     
+   }
+  
 
    }  &--blue{
     font-weight: 400;
